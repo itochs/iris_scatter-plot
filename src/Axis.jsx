@@ -27,7 +27,6 @@ export default function Axis(props) {
       />
       <VerticalAxis
         {...{
-          graphWidth,
           graphHeight,
           xPadding,
           yPadding,
@@ -91,7 +90,6 @@ function HorizontalAxis(props) {
 
 function VerticalAxis(props) {
   const {
-    graphWidth,
     graphHeight,
     xPadding,
     yPadding,
@@ -106,9 +104,9 @@ function VerticalAxis(props) {
       <g>
         <line
           key="vertical-axis"
-          x1={xPadding + graphWidth}
+          x1={xPadding}
           y1={yPadding}
-          x2={xPadding + graphWidth}
+          x2={xPadding}
           y2={yPadding + graphHeight}
           stroke={axisColor}
         />
@@ -117,9 +115,9 @@ function VerticalAxis(props) {
           return (
             <g transform="translate(0, 50)" key={tick}>
               <line
-                x1={xPadding + graphWidth}
+                x1={xPadding}
                 y1={yGradation(i)}
-                x2={xPadding + graphWidth - textPadding}
+                x2={xPadding - textPadding}
                 y2={yGradation(i)}
                 stroke={axisColor}
               ></line>
@@ -133,7 +131,7 @@ function VerticalAxis(props) {
           <g transform="translate(0, 50)" key={tick}>
             <text
               key={tick}
-              x={xPadding + graphWidth - textPadding}
+              x={xPadding - textPadding}
               y={yGradation(i)}
               textAnchor="end"
               dominantBaseline="middle"
