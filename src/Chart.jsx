@@ -75,39 +75,33 @@ export default function Chart(props) {
   return (
     <div>
       <svg width={width} height={height}>
-        {drawPoint(props.data)}
-        {/* yoko */}
-
-        <line
-          x1={xPadding}
-          y1={yPadding + graphHeight}
-          x2={xPadding + graphWidth}
-          y2={yPadding + graphHeight}
-          stroke={axisColor}
+        {/* {drawPoint(props.data)} */}
+        <ViewData
+          {...{
+            data: props.data,
+            xScale,
+            yScale,
+            colorScale,
+            xProperty,
+            yProperty,
+            colorProperty,
+            translateValue,
+            hideSpecies,
+          }}
         />
-        {xScale.ticks().map((tick, i) => {
-          return (
-            <g key={`g-${tick}`} transform="translate(50, 0)">
-              <text
-                key={tick}
-                x={xGradation(i)}
-                y={yPadding + graphHeight + textPadding}
-                textAnchor="middle"
-                dominantBaseline="hanging"
-              >
-                {tick}
-              </text>
-              <line
-                key={`${tick}-${i}`}
-                x1={xGradation(i)}
-                y1={yPadding + graphHeight + textPadding}
-                x2={xGradation(i)}
-                y2={yPadding + graphHeight}
-                stroke={axisColor}
-              ></line>
-            </g>
-          );
-        })}
+        <HorizontalAxis
+          {...{
+            xPadding,
+            yPadding,
+            graphHeight,
+            graphWidth,
+            axisColor,
+            xScale,
+            textPadding,
+            xGradation,
+            yGradation,
+          }}
+        />
         <VerticalAxis
           {...{
             height: graphHeight,
@@ -135,15 +129,91 @@ export default function Chart(props) {
   );
 }
 
-function VerticalAxis({
-  height,
-  x,
-  y,
-  axisColor,
-  yGradation,
-  yScale,
-  textPadding,
-}) {
+function ViewData(props) {
+  const {
+    data,
+    translateValue,
+    xScale,
+    yScale,
+    colorScale,
+    xProperty,
+    yProperty,
+    colorProperty,
+    hideSpecies,
+  } = props;
+  return (
+    <g>
+      {data.map((item, i) => {
+        // console.log(`want hide = ${hideSpecies}`)
+        return (
+          <g key={i} transform={translateValue}>
+            <circle
+              transform={`translate(
+                                      ${xScale(item[xProperty])},
+                                      ${yScale(item[yProperty])}
+                                      )`}
+              r="5"
+              fill={colorScale(item[colorProperty])}
+              opacity={hideSpecies.includes(item.species) ? 0 : 1}
+              style={{ transition: "transform 0.5s, opacity 0.5s" }}
+            />
+          </g>
+        );
+      })}
+    </g>
+  );
+}
+
+function HorizontalAxis(props) {
+  const {
+    xPadding,
+    yPadding,
+    graphHeight,
+    graphWidth,
+    axisColor,
+    xScale,
+    textPadding,
+    xGradation,
+  } = props;
+
+  return (
+    <g>
+      <line
+        x1={xPadding}
+        y1={yPadding + graphHeight}
+        x2={xPadding + graphWidth}
+        y2={yPadding + graphHeight}
+        stroke={axisColor}
+      />
+      {xScale.ticks().map((tick, i) => {
+        return (
+          <g key={`g-${tick}`} transform="translate(50, 0)">
+            <text
+              key={tick}
+              x={xGradation(i)}
+              y={yPadding + graphHeight + textPadding}
+              textAnchor="middle"
+              dominantBaseline="hanging"
+            >
+              {tick}
+            </text>
+            <line
+              key={`${tick}-${i}`}
+              x1={xGradation(i)}
+              y1={yPadding + graphHeight + textPadding}
+              x2={xGradation(i)}
+              y2={yPadding + graphHeight}
+              stroke={axisColor}
+            ></line>
+          </g>
+        );
+      })}
+    </g>
+  );
+}
+
+function VerticalAxis(props) {
+  const { height, x, y, axisColor, yGradation, yScale, textPadding } = props;
   return (
     <g>
       {/* tate */}
