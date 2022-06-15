@@ -113,22 +113,26 @@ function Chart(props) {
           );
         })}
         <VerticalAxis
-          height={graphHeight}
-          x={xPadding}
-          y={yPadding}
-          axisColor={axisColor}
-          yGradation={yGradation}
-          yScale={yScale}
-          textPadding={textPadding}
+          {...{
+            height: graphHeight,
+            x: xPadding,
+            y: yPadding,
+            axisColor,
+            yGradation,
+            yScale,
+            textPadding,
+          }}
         />
         <Legend
-          species={species}
-          x={xPadding + graphWidth}
-          y={yPadding}
-          textPadding={textPadding}
-          colorScale={colorScale}
-          hideSpecies={hideSpecies}
-          setHideSpecies={setHideSpecies}
+          {...{
+            species,
+            x: xPadding + graphWidth,
+            y: yPadding,
+            textPadding,
+            colorScale,
+            hideSpecies,
+            setHideSpecies,
+          }}
         />
       </svg>
     </div>
@@ -324,8 +328,8 @@ export default function App() {
 
   return (
     <div>
-      <SelectProperty getXProperty={getXProperty} getYProperty={getYProperty} />
-      <Chart data={data} xProperty={xProperty} yProperty={yProperty} />
+      <SelectProperty {...{ getXProperty, getYProperty }} />
+      <Chart {...{ data, xProperty, yProperty }} />
     </div>
   );
 }
