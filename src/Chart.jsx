@@ -1,8 +1,8 @@
 import * as d3 from "d3";
+import Axis from "./Axis";
 import { useState } from "react";
 
 export default function Chart(props) {
-  // const [xProperty, setXProperty] = useState([])
   const xProperty = props.xProperty;
   const yProperty = props.yProperty;
   const colorProperty = "species";
@@ -46,36 +46,10 @@ export default function Chart(props) {
     .domain([0, yScale.ticks().length - 1])
     .range([graphHeight, 0])
     .nice();
-  // console.log(yScale.ticks())
-
-  function drawPoint(data) {
-    return (
-      <g>
-        {data.map((item, i) => {
-          // console.log(`want hide = ${hideSpecies}`)
-          return (
-            <g key={i} transform={translateValue}>
-              <circle
-                transform={`translate(
-                                  ${xScale(item[xProperty])},
-                                  ${yScale(item[yProperty])}
-                                  )`}
-                r="5"
-                fill={colorScale(item[colorProperty])}
-                opacity={hideSpecies.includes(item.species) ? 0 : 1}
-                style={{ transition: "transform 0.5s, opacity 0.5s" }}
-              />
-            </g>
-          );
-        })}
-      </g>
-    );
-  }
 
   return (
     <div>
       <svg width={width} height={height}>
-        {/* {drawPoint(props.data)} */}
         <ViewData
           {...{
             data: props.data,
@@ -89,30 +63,21 @@ export default function Chart(props) {
             hideSpecies,
           }}
         />
-        <HorizontalAxis
+        <Axis
           {...{
             xPadding,
             yPadding,
-            graphHeight,
             graphWidth,
-            axisColor,
+            graphHeight,
             xScale,
-            textPadding,
             xGradation,
-            yGradation,
-          }}
-        />
-        <VerticalAxis
-          {...{
-            height: graphHeight,
-            x: xPadding,
-            y: yPadding,
-            axisColor,
-            yGradation,
             yScale,
+            yGradation,
+            axisColor,
             textPadding,
           }}
         />
+
         <Legend
           {...{
             species,
@@ -157,103 +122,6 @@ function ViewData(props) {
               opacity={hideSpecies.includes(item.species) ? 0 : 1}
               style={{ transition: "transform 0.5s, opacity 0.5s" }}
             />
-          </g>
-        );
-      })}
-    </g>
-  );
-}
-
-function HorizontalAxis(props) {
-  const {
-    xPadding,
-    yPadding,
-    graphHeight,
-    graphWidth,
-    axisColor,
-    xScale,
-    textPadding,
-    xGradation,
-  } = props;
-
-  return (
-    <g>
-      <line
-        x1={xPadding}
-        y1={yPadding + graphHeight}
-        x2={xPadding + graphWidth}
-        y2={yPadding + graphHeight}
-        stroke={axisColor}
-      />
-      {xScale.ticks().map((tick, i) => {
-        return (
-          <g key={`g-${tick}`} transform="translate(50, 0)">
-            <text
-              key={tick}
-              x={xGradation(i)}
-              y={yPadding + graphHeight + textPadding}
-              textAnchor="middle"
-              dominantBaseline="hanging"
-            >
-              {tick}
-            </text>
-            <line
-              key={`${tick}-${i}`}
-              x1={xGradation(i)}
-              y1={yPadding + graphHeight + textPadding}
-              x2={xGradation(i)}
-              y2={yPadding + graphHeight}
-              stroke={axisColor}
-            ></line>
-          </g>
-        );
-      })}
-    </g>
-  );
-}
-
-function VerticalAxis(props) {
-  const { height, x, y, axisColor, yGradation, yScale, textPadding } = props;
-  return (
-    <g>
-      {/* tate */}
-      <g>
-        <line
-          key="vertical-axis"
-          x1={x}
-          y1={y}
-          x2={x}
-          y2={y + height}
-          stroke={axisColor}
-        />
-        {/* memori */}
-        {yScale.ticks().map((tick, i) => {
-          return (
-            <g transform="translate(0, 50)" key={tick}>
-              <line
-                x1={x}
-                y1={yGradation(i)}
-                x2={x - textPadding}
-                y2={yGradation(i)}
-                stroke={axisColor}
-              ></line>
-            </g>
-          );
-        })}
-      </g>
-
-      {yScale.ticks().map((tick, i) => {
-        return (
-          <g transform="translate(0, 50)" key={tick}>
-            <text
-              key={tick}
-              x={x - textPadding}
-              y={yGradation(i)}
-              textAnchor="end"
-              dominantBaseline="middle"
-            >
-              {tick}
-            </text>
           </g>
         );
       })}
