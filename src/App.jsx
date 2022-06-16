@@ -36,8 +36,19 @@ export default function App() {
 
   return (
     <div>
+      <Header />
       <SelectProperty {...{ getXProperty, getYProperty }} />
       <Chart {...{ data, xProperty, yProperty }} />
+    </div>
+  );
+}
+
+function Header() {
+  return (
+    <div className="hero is-small is-info">
+      <div className="hero-body">
+        <h1 className="title">scatter plot of iris data</h1>
+      </div>
     </div>
   );
 }

@@ -11,25 +11,31 @@ export default function SelectProperty({ getXProperty, getYProperty }) {
   }
 
   return (
-    <div>
-      <form>
-        <label>x property</label>
-        <select defaultValue="sepalLength" onChange={changeXProperty}>
-          <option value="sepalLength">sepal length</option>
-          <option value="sepalWidth">sepal width</option>
-          <option value="petalLength">petal length</option>
-          <option value="petalWidth">petal width</option>
-        </select>
-      </form>
-      <form>
-        <label>y property</label>
-        <select defaultValue="sepalWidth" onChange={changeYProperty}>
-          <option value="sepalLength">sepal length</option>
-          <option value="sepalWidth">sepal width</option>
-          <option value="petalLength">petal length</option>
-          <option value="petalWidth">petal width</option>
-        </select>
-      </form>
+    <div className="control">
+      <div className="notification columns">
+        <form className="column is-centered">
+          <label className="label">x property</label>
+          <div className="select">
+            <select defaultValue="sepalLength" onChange={changeXProperty}>
+              <option value="sepalLength">sepal length</option>
+              <option value="sepalWidth">sepal width</option>
+              <option value="petalLength">petal length</option>
+              <option value="petalWidth">petal width</option>
+            </select>
+          </div>
+        </form>
+        <form className="column is-centered">
+          <label className="label">y property</label>
+          <div className="select">
+            <select defaultValue="sepalWidth" onChange={changeYProperty}>
+              <option value="sepalLength">sepal length</option>
+              <option value="sepalWidth">sepal width</option>
+              <option value="petalLength">petal length</option>
+              <option value="petalWidth">petal width</option>
+            </select>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

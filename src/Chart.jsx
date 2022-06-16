@@ -49,47 +49,52 @@ export default function Chart(props) {
     .nice();
 
   return (
-    <div>
+    <div className="conteiner">
       <svg width={width} height={height}>
-        <ViewData
-          {...{
-            data: props.data,
-            xScale,
-            yScale,
-            colorScale,
-            xProperty,
-            yProperty,
-            colorProperty,
-            translateValue,
-            hideSpecies,
-          }}
-        />
-        <Axis
-          {...{
-            xPadding,
-            yPadding,
-            graphWidth,
-            graphHeight,
-            xScale,
-            xGradation,
-            yScale,
-            yGradation,
-            axisColor,
-            textPadding,
-          }}
-        />
-
-        <Legend
-          {...{
-            species,
-            x: xPadding + graphWidth,
-            y: yPadding,
-            textPadding,
-            colorScale,
-            hideSpecies,
-            setHideSpecies,
-          }}
-        />
+        <g className="columns">
+          <g className="column is-centered">
+            <ViewData
+              {...{
+                data: props.data,
+                xScale,
+                yScale,
+                colorScale,
+                xProperty,
+                yProperty,
+                colorProperty,
+                translateValue,
+                hideSpecies,
+              }}
+            />
+            <Axis
+              {...{
+                xPadding,
+                yPadding,
+                graphWidth,
+                graphHeight,
+                xScale,
+                xGradation,
+                yScale,
+                yGradation,
+                axisColor,
+                textPadding,
+              }}
+            />
+          </g>
+          <g className="clumns is-centered">
+            <Legend
+              {...{
+                species,
+                x: xPadding + graphWidth,
+                y: yPadding,
+                textPadding,
+                colorScale,
+                hideSpecies,
+                setHideSpecies,
+              }}
+            />
+          </g>
+        </g>
       </svg>
     </div>
   );
